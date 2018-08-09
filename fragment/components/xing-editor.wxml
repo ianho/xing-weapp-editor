@@ -1,2 +1,25 @@
 <!--components/xing-editor.wxml-->
-<view class="editor-wrapper" style="height: {{windowHeight}}px"></view>
+<template name="editor-add-wrapper">
+  <view class="editor-add-wrapper">
+    <view class="editor-add iconfont icon-align-left"></view>
+    <view class="editor-add iconfont icon-image"></view>
+  </view>
+</template>
+<scroll-view
+  class="editor-wrapper"
+  style="height: {{windowHeight}}px"
+  scroll-y
+  enable-back-to-top>
+  <block wx:for="{{nodes}}" wx:for-item="node" wx:for-index="index" wx:key="{{index}}">
+    <block wx:if="{{node.name === 'p'}}">
+      <textarea class="editor-textarea" value="node.children[0].text"></textarea>
+    </block>
+    <block wx:if="{{node.name === 'img'}}">
+      <image class="editor-image" src="{{node.attrs.src}}" style="height: {{node.attrs._height}}"></image>
+    </block>
+    <template is="editor-add-wrapper" />
+  </block>
+  <block wx:if="{{nodes.length === 0}}">
+    <template is="editor-add-wrapper" />
+  </block>
+</scroll-view>

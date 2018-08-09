@@ -29,9 +29,16 @@ Component({
    */
   data: {
     windowHeight: 0,
+    base64: false,
+    nodes: [],
   },
 
   attached: function () {
+    if (!this.properties.imageUploadUrl) {
+      this.setData({
+        base64: true,
+      })
+    }
     const { windowHeight } = wx.getSystemInfoSync();
     this.setData({
       windowHeight,
