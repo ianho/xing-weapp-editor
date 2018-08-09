@@ -1,25 +1,35 @@
 <!--components/xing-editor.wxml-->
-<template name="editor-add-wrapper">
-  <view class="editor-add-wrapper">
-    <view class="editor-add iconfont icon-align-left"></view>
-    <view class="editor-add iconfont icon-image"></view>
-  </view>
-</template>
 <scroll-view
   class="editor-wrapper"
-  style="height: {{windowHeight}}px"
+  style="height: {{windowHeight - 50}}px"
   scroll-y
   enable-back-to-top>
+  <view class="editor-add-wrapper">
+    <view class="editor-add iconfont icon-align-left" data-index="-1" bindtap="addText"></view>
+    <view class="editor-add iconfont icon-image" data-index="-1" bindtap="addImage"></view>
+  </view>
   <block wx:for="{{nodes}}" wx:for-item="node" wx:for-index="index" wx:key="{{index}}">
-    <block wx:if="{{node.name === 'p'}}">
-      <textarea class="editor-textarea" value="node.children[0].text"></textarea>
-    </block>
-    <block wx:if="{{node.name === 'img'}}">
-      <image class="editor-image" src="{{node.attrs.src}}" style="height: {{node.attrs._height}}"></image>
-    </block>
-    <template is="editor-add-wrapper" />
-  </block>
-  <block wx:if="{{nodes.length === 0}}">
-    <template is="editor-add-wrapper" />
+    <view class="editor-node-wrapper">
+      <block wx:if="{{node.name === 'p'}}">
+        <textarea
+          class="editor-textarea"
+          value="{{node.children[0].text}}"
+          auto-height
+          maxlength="-1"
+          focus="{{index === textareaFocus}}"
+          data-index="{{index}}"
+          bindinput="onTextareaInput">
+        </textarea>
+      </block>
+      <block wx:if="{{node.name === 'img'}}">
+        <image class="editor-image" src="{{node.attrs.src}}" style="height: {{node.attrs._height * 700}}rpx"></image>
+      </block>
+      <view class="editor-delete iconfont icon-close" data-index="{{index}}" bindtap="deleteNode"></view>
+    </view>
+    <view class="editor-add-wrapper">
+      <view class="editor-add iconfont icon-align-left" data-index="{{index}}" bindtap="addText"></view>
+      <view class="editor-add iconfont icon-image" data-index="{{index}}" bindtap="addImage"></view>
+    </view>
   </block>
 </scroll-view>
+<button class="editor-submit-btn" style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}}">完成</button>
