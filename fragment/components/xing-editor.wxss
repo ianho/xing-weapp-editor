@@ -100,6 +100,7 @@
   background: #fff;
   padding: 20rpx;
   min-height: 2.5em;
+  font-size: 32rpx;
   /* box-sizing: border-box; */
 }
 

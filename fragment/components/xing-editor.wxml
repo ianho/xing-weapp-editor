@@ -8,7 +8,7 @@
     <view class="editor-add iconfont icon-align-left" data-index="-1" bindtap="addText"></view>
     <view class="editor-add iconfont icon-image" data-index="-1" bindtap="addImage"></view>
   </view>
-  <block wx:for="{{nodes}}" wx:for-item="node" wx:for-index="index" wx:key="{{index}}">
+  <block wx:for="{{nodeList}}" wx:for-item="node" wx:for-index="index" wx:key="{{index}}">
     <view class="editor-node-wrapper">
       <block wx:if="{{node.name === 'p'}}">
         <textarea
@@ -32,4 +32,4 @@
     </view>
   </block>
 </scroll-view>
-<button class="editor-submit-btn" style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}}">完成</button>
+<button class="editor-submit-btn" style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}}" bindtap="onFinish">完成</button>

@@ -1,1 +1,1 @@
-<xing-editor />
+<xing-editor bindfinish="finish" output-type="html" image-upload-url="http://localhost:3000/upload" image-upload-name="image" image-upload-key-chain="image.url" />
