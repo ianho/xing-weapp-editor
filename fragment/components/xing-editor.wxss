@@ -1,1 +1,8 @@
 /* components/xing-editor.wxss */
+.editor-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 750rpx;
+  background: #fff;
+}

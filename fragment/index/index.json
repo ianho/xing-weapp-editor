@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "xing-editor": "/components/xing-editor"
+  }
+}

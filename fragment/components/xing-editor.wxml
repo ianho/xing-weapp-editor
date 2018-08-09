@@ -1,2 +1,2 @@
 <!--components/xing-editor.wxml-->
-<text>components/xing-editor.wxml</text>
+<view class="editor-wrapper" style="height: {{windowHeight}}px"></view>
