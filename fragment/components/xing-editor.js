@@ -17,6 +17,10 @@ Component({
     //   value: false,
     // },
 
+    //输入内容
+    nodes: Array,
+    html: String,
+
     //内容输出格式，参考rich-text组件，默认为节点列表
     outputType: {
       type: String,
@@ -49,6 +53,31 @@ Component({
     this.setData({
       windowHeight,
     })
+    if (this.properties.nodes && this.properties.nodes.length > 0) {
+      const textBufferPool = [];
+      this.properties.nodes.forEach((node, index) => {
+        if (node.name === 'p') {
+          textBufferPool[index] = node.children[0].text;
+        }
+      })
+      this.setData({
+        textBufferPool,
+        nodeList: this.properties.nodes,
+      })
+    } else if (this.properties.html) {
+      const nodeList = this.HTMLtoNodeList();
+      const textBufferPool = [];
+      nodeList.forEach((node, index) => {
+        if (node.name === 'p') {
+          textBufferPool[index] = node.children[0].text;
+        }
+      })
+      this.setData({
+        textBufferPool,
+        nodeList,
+      })
+      console.log(textBufferPool);
+    }
   },
 
   /**
@@ -157,6 +186,38 @@ Component({
     },
 
     /**
+     * 方法：HTML转义
+     */
+    htmlEncode: function (str) {
+      var s = "";
+      if (str.length == 0) return "";
+      s = str.replace(/&/g, "&gt;");
+      s = s.replace(/</g, "&lt;");
+      s = s.replace(/>/g, "&gt;");
+      s = s.replace(/ /g, "&nbsp;");
+      s = s.replace(/\'/g, "&#39;");
+      s = s.replace(/\"/g, "&quot;");
+      s = s.replace(/\n/g, "<br>");
+      return s;
+    },
+
+    /**
+     * 方法：HTML转义
+     */
+    htmlDecode: function (str) {
+      var s = "";
+      if(str.length == 0) return "";
+      s = str.replace(/&gt;/g, "&");
+      s = s.replace(/&lt;/g, "<");
+      s = s.replace(/&gt;/g, ">");
+      s = s.replace(/&nbsp;/g, " ");
+      s = s.replace(/&#39;/g, "\'");
+      s = s.replace(/&quot;/g, "\"");
+      s = s.replace(/<br>/g, "\n");
+      return s;
+    },
+
+    /**
      * 方法：将缓冲池的文本写入节点
      */
     writeTextToNode: function (e) {
@@ -173,20 +234,44 @@ Component({
     },
 
     /**
+     * 方法：将HTML转为节点
+     */
+    HTMLtoNodeList: function () {
+      let html = this.properties.html;
+      let htmlNodeList = [];
+      while (html.length > 0) {
+        const endTag = html.match(/<\/[a-z0-9]+>/);
+        if (!endTag) break;
+        const htmlNode = html.substring(0, endTag.index + endTag[0].length);
+        htmlNodeList.push(htmlNode);
+        html = html.substring(endTag.index + endTag[0].length);
+      }
+      return htmlNodeList.map(htmlNode => {
+        let node = {attrs: {}};
+        const startTag = htmlNode.match(/<[^<>]+>/);
+        const startTagStr = startTag[0].substring(1, startTag[0].length - 1).trim();
+        node.name = startTagStr.split(/\s+/)[0];
+        startTagStr.match(/[^\s]+="[^"]+"/g).forEach(attr => {
+          const [name, value] = attr.split('=');
+          node.attrs[name] = value.replace(/"/g, '');
+        })
+        if (node.name === 'p') {
+          const endTag = htmlNode.match(/<\/[a-z0-9]+>/);
+          const text = this.htmlDecode(htmlNode.substring(startTag.index + startTag[0].length, endTag.index).trim());
+          node.children = [{
+            text,
+            type: 'text',
+          }]
+        }
+        return node;
+      })
+    },
+
+    /**
      * 方法：将节点转为HTML
      */
     nodeListToHTML: function () {
-      const nodeList = this.data.nodeList;
-      const html = nodeList.map(node => {
-        if (node.name === 'p') {
-          return `<p class="xing-p">${node.children[0].text}</p>`;
-        }
-        if (node.name === 'img') {
-          return `<img class="xing-img" style="width: 100%" src="${node.attrs.src}" />`;
-        }
-        return '';
-      }).join('');
-      return html;
+      return this.data.nodeList.map(node => `<${node.name} ${Object.keys(node.attrs).map(key => `${key}="${node.attrs[key]}"`).join(' ')}>${node.children ? this.htmlEncode(node.children[0].text) : ''}</${node.name}>`).join('');
     },
 
     /**
