@@ -2,6 +2,10 @@
 
 > 开箱即用的小程序图文编辑组件
 
+## 效果预览
+
+![](https://raw.githubusercontent.com/ianho/xing-weapp-editor/master/assets/editor.gif)
+
 ## 组件属性
 
 属性名|类型|默认值|说明
