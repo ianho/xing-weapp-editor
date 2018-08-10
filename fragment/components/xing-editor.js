@@ -75,7 +75,6 @@ Component({
         textBufferPool,
         nodeList,
       })
-      console.log(textBufferPool);
     }
   },
 

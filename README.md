@@ -2,6 +2,11 @@
 
 > 开箱即用的小程序图文编辑组件
 
+## 代码片段
+
+[wechatide://minicode/DqVFwymO7G1U](wechatide://minicode/DqVFwymO7G1U)
+(Github上好像点不开，只能复制链接访问了)
+
 ## 效果预览
 
 ![](https://raw.githubusercontent.com/ianho/xing-weapp-editor/master/assets/editor.gif)
