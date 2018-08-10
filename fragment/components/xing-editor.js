@@ -45,7 +45,6 @@ Component({
     windowHeight: 0,
     nodeList: [],
     textBufferPool: [],
-    textareaFocus: null,
   },
 
   attached: function () {
@@ -107,7 +106,6 @@ Component({
       this.setData({
         nodeList,
         textBufferPool,
-        textareaFocus: index + 1,
       })
     },
 

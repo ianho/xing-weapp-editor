@@ -25,27 +25,21 @@
 .icon-plus:before { content: "\e7fe"; }
 
 .editor-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 750rpx;
   background: #F2F6FC;
-  z-index: 999;
+  padding: 20rpx;
+  box-sizing: border-box;
 }
 
 .editor-submit-btn {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 750rpx;
+  width: 700rpx;
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 32rpx;
-  border-radius: 0;
-  z-index: 999;
-  box-shadow: 0 -3rpx 8rpx rgba(0, 0, 0, .3);
+  margin-top: 20rpx;
+  border-radius: 10rpx;
 }
 
 .editor-submit-btn::before, .editor-submit-btn::after {

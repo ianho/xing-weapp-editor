@@ -1,7 +1,7 @@
 <!--components/xing-editor.wxml-->
-<scroll-view
+<view
   class="editor-wrapper"
-  style="height: {{windowHeight - 50}}px"
+  style="min-height: {{windowHeight}}px"
   scroll-y
   enable-back-to-top>
   <view class="editor-add-wrapper">
@@ -16,7 +16,6 @@
           value="{{node.children[0].text}}"
           auto-height
           maxlength="-1"
-          focus="{{index === textareaFocus}}"
           data-index="{{index}}"
           bindinput="onTextareaInput">
         </textarea>
@@ -31,5 +30,8 @@
       <view class="editor-add iconfont icon-image" data-index="{{index}}" bindtap="addImage"></view>
     </view>
   </block>
-</scroll-view>
-<button class="editor-submit-btn" style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}}" bindtap="onFinish">完成</button>
+  <button
+    class="editor-submit-btn"
+    style="background-color: {{buttonBackgroundColor}}; color: {{buttonTextColor}}"
+    bindtap="onFinish">完成</button>
+</view>
