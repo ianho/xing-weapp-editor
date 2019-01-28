@@ -18,8 +18,14 @@ Component({
     // },
 
     //输入内容
-    nodes: Array,
-    html: String,
+    nodes: {
+      type: Array,
+      observer: 'insertNodesOrHtml',
+    },
+    html: {
+      type: String,
+      observer: 'insertNodesOrHtml',
+    },
 
     //内容输出格式，参考rich-text组件，默认为节点列表
     outputType: {
@@ -52,19 +58,24 @@ Component({
     this.setData({
       windowHeight,
     })
-    if (this.properties.nodes && this.properties.nodes.length > 0) {
-      const textBufferPool = [];
-      this.properties.nodes.forEach((node, index) => {
-        if (node.name === 'p') {
-          textBufferPool[index] = node.children[0].text;
-        }
-      })
-      this.setData({
-        textBufferPool,
-        nodeList: this.properties.nodes,
-      })
-    } else if (this.properties.html) {
-      const nodeList = this.HTMLtoNodeList();
+    this.insertNodesOrHtml();
+  },
+
+  /**
+   * 组件的方法列表
+   */
+  methods: {
+    insertNodesOrHtml: function () {
+      let nodeList;
+      if (this.properties.nodes && this.properties.nodes.length > 0) {
+        nodeList = this.properties.nodes;
+      } else if (this.properties.html) {
+        nodeList = this.HTMLtoNodeList();
+      }
+      this.insertNodes(nodeList);
+    },
+
+    insertNodes: function (nodeList) {
       const textBufferPool = [];
       nodeList.forEach((node, index) => {
         if (node.name === 'p') {
@@ -75,13 +86,8 @@ Component({
         textBufferPool,
         nodeList,
       })
-    }
-  },
+    },
 
-  /**
-   * 组件的方法列表
-   */
-  methods: {
     /**
      * 事件：添加文本
      */
