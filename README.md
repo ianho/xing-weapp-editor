@@ -2,6 +2,12 @@
 
 > 开箱即用的小程序图文编辑组件
 
+## 插入一条广告（from myself）
+
+> 字节跳动 - EE内推专场；广州、深圳、上海；欢迎扫码狂砸简历
+
+![](http://sf6-ttcdn-tos.pstatp.com/obj/developer-baas/baas/tt38956bv3v5xslr15/11ba675895161801_1552454453803.png)
+
 ## 代码片段
 
 [https://developers.weixin.qq.com/s/adp5u9mk7H6w](https://developers.weixin.qq.com/s/adp5u9mk7H6w)
