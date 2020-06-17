@@ -1,4 +1,4 @@
-<font color=red>太久没空更新，不确定是否可用</font>
+⚠️ 太久没空更新，不确定是否可用
 
 # xing-weapp-editor
 
